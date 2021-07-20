@@ -1,13 +1,36 @@
 import React, { useState } from 'react';
+import { validateEmail } from '../../utils/helpers';
 
 function ContactForm() {
     // initializing state
     const [formState, setFormState] = useState({ name:'', email:'', message:'' });
     const {name, email, message} = formState;
+    const [errorMessage, setErrorMessage] = useState('');
 
     // sync internal state of component formState with user input from DOM
     function handleChange(e) {
-        setFormState({...formState, [e.target.name]: e.target.value });
+        if (e.target.name === 'email') {
+            const isValid = validateEmail(e.target.value);
+            if (!isValid) {
+                setErrorMessage('Your email is invalid');
+            }
+            else {
+                setErrorMessage('');
+            }
+        }
+        else {
+            if (!e.target.value.length) {
+                setErrorMessage(`${e.target.name} is required.`);
+            }
+            else {
+                setErrorMessage('');
+            }
+        }
+
+        if (!errorMessage) {
+            setFormState({...formState, [e.target.name]: e.target.value });
+        }
+        //console.log('errorMessage', errorMessage);
     }
 
     //console.log(formState);
