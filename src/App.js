@@ -7,7 +7,7 @@ import ContactForm from './components/Contact';
 function App() {
   const [categories] = useState([
     {
-        name: 'commerical',
+        name: 'commercial',
         description: 'Photos of grocery stores, food trucks, and other commercial projects',
     },
     {

@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import Modal from '../Modal';
 
 import photo from '../../assets/small/commercial/2.jpg';
-const photo2 = `${require('../../assets/small/commercial/3.jpg')}`;
+const photo2 = require('../../assets/small/commercial/3.jpg');
+
+console.log(photo2.default);
 
 function PhotoList({ category }) {
     const [photos] = useState([
@@ -113,29 +115,24 @@ function PhotoList({ category }) {
       setIsModalOpen(!isModalOpen);
     }
 
-    console.log(currentPhotos);
-    console.log(category);
-
     return (
         <div>
           {isModalOpen && <Modal currentPhoto={currentPhoto} onClose={toggleModal} />}
             <div className="flex-row">
                 {currentPhotos.map((image, i) => {
-                  console.log(image, i);
+                  const imgSrc=require(`../../assets/small/${category}/${i}.jpg`);
                   return (
                     <img
-                        src={require(`../../../public/assets/small/${category}/${i}.jpg`)}
+                        src={imgSrc.default}
                         alt={image.name}
                         className="img-thumbnail mx-1"
                         onClick={() => toggleModal(image, i)}
                         key={image.name}
                 />
                 )})}
-                <img src={photo} />
-                <img src={photo2} />
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default PhotoList;
